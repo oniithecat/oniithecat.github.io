@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Onii</title>
+    <link>https://oniithecat.github.io/</link>
+    <description>Recent content on Onii</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://oniithecat.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unity Mono Game Hacking</title>
+      <link>https://oniithecat.github.io/articles/unity-mono-game-hacking/</link>
+      <pubDate>Sat, 04 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://oniithecat.github.io/articles/unity-mono-game-hacking/</guid>
+      <description>WARNING: In this article, I will not cover anti-cheat bypass or anything related to that. Education purpose only
+ Table of Contents  What is Mono ? Explore using CE Write an internal in C# Conclusion  What is Mono ? Mono is an open source implementation of .NET framework which allows developpers to create cross-platform applications targeting Linux, Android, Windows, MacOS&amp;hellip;
+Explore using CE In this part, I&amp;rsquo;ll show you how to exploit Mono game using Cheat Engine.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://oniithecat.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://oniithecat.github.io/about/</guid>
+      <description>Coming soon&amp;hellip; </description>
+    </item>
+    
+  </channel>
+</rss>

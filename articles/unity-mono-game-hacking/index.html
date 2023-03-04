@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Unity Mono Game Hacking // Onii</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.92.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="onii" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Unity Mono Game Hacking"/>
+<meta name="twitter:description" content="WARNING: In this article, I will not cover anti-cheat bypass or anything related to that. Education purpose only
+ Table of Contents  What is Mono ? Explore using CE Write an internal in C# Conclusion  What is Mono ? Mono is an open source implementation of .NET framework which allows developpers to create cross-platform applications targeting Linux, Android, Windows, MacOS&hellip;
+Explore using CE In this part, I&rsquo;ll show you how to exploit Mono game using Cheat Engine."/>
+
+    <meta property="og:title" content="Unity Mono Game Hacking" />
+<meta property="og:description" content="WARNING: In this article, I will not cover anti-cheat bypass or anything related to that. Education purpose only
+ Table of Contents  What is Mono ? Explore using CE Write an internal in C# Conclusion  What is Mono ? Mono is an open source implementation of .NET framework which allows developpers to create cross-platform applications targeting Linux, Android, Windows, MacOS&hellip;
+Explore using CE In this part, I&rsquo;ll show you how to exploit Mono game using Cheat Engine." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oniithecat.github.io/articles/unity-mono-game-hacking/" /><meta property="article:section" content="articles" />
+<meta property="article:published_time" content="2023-03-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-04T00:00:00+00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://oniithecat.github.io/"><img class="app-header-avatar" src="/img/ding.jpg" alt="onii" /></a>
+      <span class="app-header-title">Onii</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/about/">About</a>
+            -
+          
+          <a class="app-header-menu-item" href="/articles/">Articles</a>
+      </nav>
+      <p>Low level stuff</p>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Unity Mono Game Hacking</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 4, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://oniithecat.github.io/tags/game/">game</a>
+              <a class="tag" href="https://oniithecat.github.io/tags/hacking/">hacking</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <blockquote>
+<p><strong>WARNING</strong>: In this article, I will not cover anti-cheat bypass or anything related to that. Education purpose only</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#what-is-mono">What is Mono ?</a></li>
+<li><a href="#explore-using-ce">Explore using CE</a></li>
+<li><a href="#write-an-internal">Write an internal in C#</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="what-is-mono-">What is Mono ?</h2>
+<p>Mono is an open source implementation of .NET framework which allows developpers to create cross-platform applications targeting Linux, Android, Windows, MacOS&hellip;</p>
+<h2 id="explore-using-ce">Explore using CE</h2>
+<p>In this part, I&rsquo;ll show you how to exploit <strong>Mono</strong> game using <a href="https://www.cheatengine.org/downloads.php">Cheat Engine</a>. I assume you already know how CE works.
+So, when you load the game process you just have to click on the Mono tab and select Activate mono features. Then, click on Dissect mono in order to go through Assembly-CSharp dll.</p>
+<p><img src="/img/ce.png" alt="ce"></p>
+<p>As an example, let&rsquo;s take a look at &ldquo;PlayerMovement&rdquo; class. In fields tab, you can see many instances of class.</p>
+<p><img src="/img/ce1.png" alt="ce1"></p>
+<p>By finding the address of the structure, you will be able to gain access to the part of the memory concerned and modify it as you wish.</p>
+<p>So, you can go from this (health address) :</p>
+<p><img src="/img/basic.png" alt="basic"></p>
+<p>To this :</p>
+<p><img src="/img/to.png" alt="to"></p>
+<h2 id="write-a-basic-internal-in-csharp">Write a basic internal in CSharp</h2>
+<p>In this part, we are going to take a closer look to the game files. If you know a little bit about Unity game structure you might notice that game datas are stored in GameName_Data folder. Now you can go through the folders and you will find the Managed folder where there is Assembly-CSharp.dll.
+You can now disassemble it using <a href="https://github.com/dnSpy/dnSpy">dnSpy</a> or <a href="https://www.jetbrains.com/fr-fr/decompiler/">dotPeek</a> or whatever you want.</p>
+<p>Thanks to these tools you will be able to see game classes or even understand how the game works !</p>
+<p><img src="/img/chest.png" alt="chest"></p>
+<p>Now in order to make a basic game exploitation script, you will need to use an IDE (I used Visual Studio and I personnaly recommend it). Let&rsquo;s import all UnityEngine dlls of the game in our project. Once you did this, you can create a Loader.cs file which is useful to initialize our exploit.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> UnityEngine;
+
+<span style="color:#66d9ef">namespace</span> Whatever
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Loader</span>
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Init()
+        {
+            Loader.Load = <span style="color:#66d9ef">new</span> GameObject();
+            Loader.Load.AddComponent&lt;Main&gt;();
+            GameObject.DontDestroyOnLoad(Loader.Load);
+        }
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Unload()
+        {
+            <span style="color:#ae81ff">_</span>Unload();
+        }
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#ae81ff">_</span>Unload()
+        {
+            GameObject.Destroy(Load);
+        }
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> GameObject Load;
+    }
+}
+</code></pre></div><p>This small program is pretty simple to understand, it defines a class named &ldquo;Loader&rdquo; then 3 static methods.</p>
+<ul>
+<li><code>Init()</code> contains a new GameObject that we assign a &ldquo;Main&rdquo; component.</li>
+<li><code>Unload()</code> calls <code>_Unload()</code> function that will destroy the GameObject created in <code>Init()</code> function.</li>
+</ul>
+<p>Now this is the fun part, create a new .cs file where we&rsquo;ll write our main script.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> UnityEngine;
+
+<span style="color:#66d9ef">namespace</span> Whatever
+{
+    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> : MonoBehaviour
+    {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnGUI()
+        {
+            
+            GUI.Box(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">0f</span>, <span style="color:#ae81ff">0f</span>, <span style="color:#ae81ff">100f</span>, <span style="color:#ae81ff">40f</span>), <span style="color:#e6db74">&#34;&#34;</span>);
+            GUI.Label(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">0f</span>, <span style="color:#ae81ff">0f</span>, <span style="color:#ae81ff">100f</span>, <span style="color:#ae81ff">30f</span>), <span style="color:#e6db74">&#34;Injected&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> Start()
+        {
+
+        }
+
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Update()
+        {
+            <span style="color:#66d9ef">if</span> (Input.GetKeyDown(KeyCode.Delete))
+            {
+                Loader.Unload();
+            }
+        }
+    }
+}
+</code></pre></div><p>Here is again the basic script you can easily find on the web which contains 3 methods.</p>
+<ul>
+<li>The <code>Start()</code> method is called once when the program is injected.</li>
+<li>The <code>OnGUI()</code> method is in charge of GUI.</li>
+<li>The <code>Update()</code> method is called every frame.</li>
+</ul>
+<p>Now, you have to build the dll and inject it using <a href="https://github.com/warbler/SharpMonoInjector">SharpMonoInjector</a> with this command :</p>
+<p><code>.\smi.exe inject -p &quot;NameOfTheProcess&quot; -a &quot;whatever.dll&quot; -n Whatever -c Loader -m Init</code></p>
+<p><img src="/img/game.png" alt="game"></p>
+<p>As  you can see, our cheat has been injected into the game !</p>
+<h2 id="conclusion-">Conclusion :</h2>
+<p>I hope useful and you enjoyed this little article about game hacking and, if you want i make a second part / having issues with anything, let me know !</p>
+<p>Discord : onii#0121</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
